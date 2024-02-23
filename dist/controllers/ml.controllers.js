@@ -44,11 +44,11 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
         case 0:
           routes = req.body.routes;
           if (!routes) {
-            _context3.next = 65;
+            _context3.next = 66;
             break;
           }
           if (!(routes.length > 0)) {
-            _context3.next = 62;
+            _context3.next = 63;
             break;
           }
           _req$decodedJwtToken = req.decodedJwtToken, userId = _req$decodedJwtToken.userId, mlToken = _req$decodedJwtToken.mlToken, sicofiToken = _req$decodedJwtToken.sicofiToken;
@@ -57,7 +57,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           it = 0;
         case 7:
           if (!(it < 2)) {
-            _context3.next = 60;
+            _context3.next = 61;
             break;
           }
           _context3.prev = 8;
@@ -111,7 +111,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             _context3.next = 33;
             break;
           }
-          return _context3.abrupt("continue", 57);
+          return _context3.abrupt("continue", 58);
         case 33:
           promisesRoutes = responsesRoutes.map(function (elem) {
             return elem.json();
@@ -269,64 +269,65 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           break;
         case 44:
           res.cookie('__session', jwtToken);
+          res.setHeader('Cache-Control', 'private');
           if (!bandUnauthorized) {
-            _context3.next = 47;
+            _context3.next = 48;
             break;
           }
           return _context3.abrupt("return", res.status(401).json({
             error: "",
             message: "Se ha vencido el token de 'Mercado Libre' y no fue posible renovarlo."
           }));
-        case 47:
+        case 48:
           if (!(invalidRoutes.length != 0)) {
-            _context3.next = 51;
+            _context3.next = 52;
             break;
           }
           return _context3.abrupt("return", res.status(404).json({
             error: "",
             message: "Rutas no existentes: " + invalidRoutes.join(",")
           }));
-        case 51:
+        case 52:
           return _context3.abrupt("return", res.status(200).json({
             error: "",
             message: "La peticion fue satisfactoria.",
             shipments: shipments
           }));
-        case 52:
-          _context3.next = 57;
+        case 53:
+          _context3.next = 58;
           break;
-        case 54:
-          _context3.prev = 54;
+        case 55:
+          _context3.prev = 55;
           _context3.t1 = _context3["catch"](8);
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "Ha ocurrido un problema al realizar la peticion."
           }));
-        case 57:
+        case 58:
           it++;
           _context3.next = 7;
           break;
-        case 60:
-          _context3.next = 63;
+        case 61:
+          _context3.next = 64;
           break;
-        case 62:
+        case 63:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "La lista de rutas esta vacia."
           }));
-        case 63:
-          _context3.next = 66;
+        case 64:
+          _context3.next = 67;
           break;
-        case 65:
+        case 66:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "No se recibieron los datos completos."
           }));
-        case 66:
+        case 67:
         case "end":
           return _context3.stop();
       }
-    }, _callee, null, [[8, 54]]);
+    }, _callee, null, [[8, 55]]);
   }));
   return function getShipments(_x, _x2) {
     return _ref.apply(this, arguments);
