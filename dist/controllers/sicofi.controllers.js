@@ -107,7 +107,7 @@ var cfdiTraslado = exports.cfdiTraslado = /*#__PURE__*/function () {
           }
           return _context.abrupt("continue", 40);
         case 23:
-          res.cookie('__session', jwtToken);
+          res.cookie('session', jwtToken);
           res.setHeader('Cache-Control', 'private');
           if (!(response.status == 401)) {
             _context.next = 27;
@@ -296,7 +296,7 @@ var cfdiIngreso = exports.cfdiIngreso = /*#__PURE__*/function () {
           }
           return _context2.abrupt("continue", 50);
         case 23:
-          res.cookie('__session', jwtToken);
+          res.cookie('session', jwtToken);
           res.setHeader('Cache-Control', 'private');
           if (!(response.status == 401)) {
             _context2.next = 27;
@@ -466,7 +466,7 @@ var cfdiIngresoCP = exports.cfdiIngresoCP = /*#__PURE__*/function () {
                   }
                   return _context3.abrupt("return", 0);
                 case 16:
-                  res.cookie('__session', jwtToken);
+                  res.cookie('session', jwtToken);
                   res.setHeader('Cache-Control', 'private');
                   if (!(response.status == 401)) {
                     _context3.next = 20;
