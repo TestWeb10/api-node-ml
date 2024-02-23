@@ -107,7 +107,7 @@ var cfdiTraslado = exports.cfdiTraslado = /*#__PURE__*/function () {
           }
           return _context.abrupt("continue", 39);
         case 23:
-          res.cookie('jwtToken', jwtToken);
+          res.cookie('__session', jwtToken);
           if (!(response.status == 401)) {
             _context.next = 26;
             break;
@@ -295,7 +295,7 @@ var cfdiIngreso = exports.cfdiIngreso = /*#__PURE__*/function () {
           }
           return _context2.abrupt("continue", 49);
         case 23:
-          res.cookie('jwtToken', jwtToken);
+          res.cookie('__session', jwtToken);
           if (!(response.status == 401)) {
             _context2.next = 26;
             break;
@@ -464,7 +464,7 @@ var cfdiIngresoCP = exports.cfdiIngresoCP = /*#__PURE__*/function () {
                   }
                   return _context3.abrupt("return", 0);
                 case 16:
-                  res.cookie('jwtToken', jwtToken);
+                  res.cookie('__session', jwtToken);
                   if (!(response.status == 401)) {
                     _context3.next = 19;
                     break;

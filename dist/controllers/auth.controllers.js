@@ -69,7 +69,7 @@ var signIn = exports.signIn = /*#__PURE__*/function () {
           }, _config["default"].JWT_SECRET, {
             expiresIn: "1d"
           });
-          res.cookie('jwtToken', jwtToken);
+          res.cookie('__session', jwtToken);
           return _context.abrupt("return", res.status(200).json({
             error: "",
             message: "Se ha iniciado sesion satisfactoriamente.",

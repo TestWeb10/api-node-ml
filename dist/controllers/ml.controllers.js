@@ -268,7 +268,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           _context3.next = 39;
           break;
         case 44:
-          res.cookie('jwtToken', jwtToken);
+          res.cookie('__session', jwtToken);
           if (!bandUnauthorized) {
             _context3.next = 47;
             break;
@@ -476,7 +476,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
 //                         }
 //                     }
 
-//                     res.cookie('jwtToken', jwtToken)
+//                     res.cookie('__session', jwtToken)
 //                     if (bandUnauthorized) {
 //                         return res.status(401).json({ error: "", message: "Se ha vencido el token de 'Mercado Libre' y no fue posible renovarlo." })
 //                     }
