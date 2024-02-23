@@ -7,7 +7,6 @@ exports["default"] = void 0;
 var _express = _interopRequireDefault(require("express"));
 var _cors = _interopRequireDefault(require("cors"));
 var _bodyParser = _interopRequireDefault(require("body-parser"));
-var _morgan = _interopRequireDefault(require("morgan"));
 var _package = _interopRequireDefault(require("../package.json"));
 var _config = _interopRequireDefault(require("./config"));
 var _dbConnection = require("./db/dbConnection");
@@ -17,6 +16,8 @@ var _ml = _interopRequireDefault(require("./routes/ml.routes"));
 var _sicofi = _interopRequireDefault(require("./routes/sicofi.routes"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // Este archivo sirve para configurar la aplicacion de express
+
+// import morgan from "morgan";
 
 // Importamos rutas para un apartado en especifico
 
@@ -39,7 +40,7 @@ app.use((0, _cors["default"])({
   credentials: true
 }));
 // Solo en desarrollo
-app.use((0, _morgan["default"])("dev"));
+// app.use(morgan("dev"))
 // Si se envia poca informacion 
 //app.use(express.json())
 // Si se envia mucha informacion
