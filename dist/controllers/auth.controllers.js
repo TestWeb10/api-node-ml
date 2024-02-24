@@ -30,7 +30,7 @@ var signIn = exports.signIn = /*#__PURE__*/function () {
         case 0:
           _req$body = req.body, username = _req$body.username, password = _req$body.password;
           if (!(username && password)) {
-            _context.next = 36;
+            _context.next = 34;
             break;
           }
           _context.prev = 2;
@@ -42,7 +42,7 @@ var signIn = exports.signIn = /*#__PURE__*/function () {
         case 6:
           user = _context.sent;
           if (!user) {
-            _context.next = 28;
+            _context.next = 26;
             break;
           }
           userSchema = new _Users["default"](user);
@@ -51,7 +51,7 @@ var signIn = exports.signIn = /*#__PURE__*/function () {
         case 11:
           match = _context.sent;
           if (!match) {
-            _context.next = 25;
+            _context.next = 23;
             break;
           }
           _context.next = 15;
@@ -68,54 +68,54 @@ var signIn = exports.signIn = /*#__PURE__*/function () {
             sicofiToken: sicofiToken
           }, _config["default"].JWT_SECRET, {
             expiresIn: "1d"
-          });
-          res.cookie('session', jwtToken);
-          res.setHeader('Cache-Control', 'private');
+          }); // res.cookie('session', jwtToken)
+          // res.setHeader('Cache-Control', 'private')
           return _context.abrupt("return", res.status(200).json({
             error: "",
             message: "Se ha iniciado sesion satisfactoriamente.",
+            jwtToken: jwtToken,
             username: userSchema.username,
             calendar: userSchema.calendar,
             invoices: userSchema.invoices,
             auto_transport: userSchema.auto_transport,
             figure_transport: userSchema.figure_transport
           }));
-        case 25:
+        case 23:
           return _context.abrupt("return", res.status(403).json({
             error: "",
             message: "La contraseña es incorrecta."
           }));
-        case 26:
-          _context.next = 29;
+        case 24:
+          _context.next = 27;
           break;
-        case 28:
+        case 26:
           return _context.abrupt("return", res.status(404).json({
             error: "",
             message: "Usuario no encontrado en la base de datos."
           }));
-        case 29:
-          _context.next = 34;
+        case 27:
+          _context.next = 32;
           break;
-        case 31:
-          _context.prev = 31;
+        case 29:
+          _context.prev = 29;
           _context.t0 = _context["catch"](2);
           return _context.abrupt("return", res.status(409).json({
             error: _context.t0,
             message: "Ha ocurrido un problema en la base de datos."
           }));
-        case 34:
-          _context.next = 37;
+        case 32:
+          _context.next = 35;
           break;
-        case 36:
+        case 34:
           return _context.abrupt("return", res.status(400).json({
             error: "",
             message: "No se recibieron los datos completos."
           }));
-        case 37:
+        case 35:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[2, 31]]);
+    }, _callee, null, [[2, 29]]);
   }));
   return function signIn(_x, _x2) {
     return _ref.apply(this, arguments);

@@ -44,11 +44,11 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
         case 0:
           routes = req.body.routes;
           if (!routes) {
-            _context3.next = 66;
+            _context3.next = 64;
             break;
           }
           if (!(routes.length > 0)) {
-            _context3.next = 63;
+            _context3.next = 61;
             break;
           }
           _req$decodedJwtToken = req.decodedJwtToken, userId = _req$decodedJwtToken.userId, mlToken = _req$decodedJwtToken.mlToken, sicofiToken = _req$decodedJwtToken.sicofiToken;
@@ -57,7 +57,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           it = 0;
         case 7:
           if (!(it < 2)) {
-            _context3.next = 61;
+            _context3.next = 59;
             break;
           }
           _context3.prev = 8;
@@ -111,7 +111,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             _context3.next = 33;
             break;
           }
-          return _context3.abrupt("continue", 58);
+          return _context3.abrupt("continue", 56);
         case 33:
           promisesRoutes = responsesRoutes.map(function (elem) {
             return elem.json();
@@ -268,232 +268,70 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           _context3.next = 39;
           break;
         case 44:
-          res.cookie('session', jwtToken);
-          res.setHeader('Cache-Control', 'private');
           if (!bandUnauthorized) {
-            _context3.next = 48;
+            _context3.next = 46;
             break;
           }
           return _context3.abrupt("return", res.status(401).json({
             error: "",
-            message: "Se ha vencido el token de 'Mercado Libre' y no fue posible renovarlo."
+            message: "Se ha vencido el token de 'Mercado Libre' y no fue posible renovarlo.",
+            jwtToken: jwtToken
           }));
-        case 48:
+        case 46:
           if (!(invalidRoutes.length != 0)) {
-            _context3.next = 52;
+            _context3.next = 50;
             break;
           }
           return _context3.abrupt("return", res.status(404).json({
             error: "",
-            message: "Rutas no existentes: " + invalidRoutes.join(",")
+            message: "Rutas no existentes: " + invalidRoutes.join(","),
+            jwtToken: jwtToken
           }));
-        case 52:
+        case 50:
           return _context3.abrupt("return", res.status(200).json({
             error: "",
             message: "La peticion fue satisfactoria.",
+            jwtToken: jwtToken,
             shipments: shipments
           }));
-        case 53:
-          _context3.next = 58;
+        case 51:
+          _context3.next = 56;
           break;
-        case 55:
-          _context3.prev = 55;
+        case 53:
+          _context3.prev = 53;
           _context3.t1 = _context3["catch"](8);
           return _context3.abrupt("return", res.status(400).json({
             error: "",
-            message: "Ha ocurrido un problema al realizar la peticion."
+            message: "Ha ocurrido un problema al realizar la peticion.",
+            jwtToken: jwtToken
           }));
-        case 58:
+        case 56:
           it++;
           _context3.next = 7;
           break;
-        case 61:
-          _context3.next = 64;
+        case 59:
+          _context3.next = 62;
           break;
-        case 63:
+        case 61:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "La lista de rutas esta vacia."
           }));
-        case 64:
-          _context3.next = 67;
+        case 62:
+          _context3.next = 65;
           break;
-        case 66:
+        case 64:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "No se recibieron los datos completos."
           }));
-        case 67:
+        case 65:
         case "end":
           return _context3.stop();
       }
-    }, _callee, null, [[8, 55]]);
+    }, _callee, null, [[8, 53]]);
   }));
   return function getShipments(_x, _x2) {
     return _ref.apply(this, arguments);
   };
 }();
-
-// export const getShipments = async (req, res) => {
-//     const { routes } = req.body
-//     if (routes) {
-//         if (routes.length > 0) {
-//             let { userId, mlToken, sicofiToken } = req.decodedJwtToken
-//             let jwtToken = req.jwtToken
-//             let { user, usersModel } = req.userData
-
-//             for (let it = 0; it < 2; it++) {
-//                 try {
-//                     let shipments = []
-//                     let bandUnauthorized = false
-//                     let invalidRoutes = []
-//                     let uris = []
-//                     for (let i = 0; i < routes.length; i++) {
-//                         let URI = config.URI_ML + "/routes/" + routes[i] + "/carta-porte-details?access_token=" + mlToken
-//                         uris.push(fetch(URI, {
-//                             method: 'GET'
-//                         }))
-//                     }
-//                     let responsesRoutes = await Promise.all(uris);
-//                     let statusRoutes = responsesRoutes.map((elem) => elem.status);
-//                     let band = false
-//                     for (let i = 0; i < statusRoutes.length; i++) {
-//                         if (statusRoutes[i] == 401 && it == 0) {
-//                             // Token vencido, por tanto obtenemos uno nuevo y lo volvemos a intentar
-//                             mlToken = await Tokens.getMLToken(user.client_id, user.client_secret, user.grant_type)
-//                             jwtToken = jwt.sign({
-//                                 userId: userId,
-//                                 mlToken: mlToken,
-//                                 sicofiToken: sicofiToken
-//                             }, config.JWT_SECRET, {
-//                                 expiresIn: "1d"
-//                             })
-//                             band = true
-//                             break
-//                         }
-//                     }
-//                     if (band && it == 0) {
-//                         continue
-//                     }
-//                     let promisesRoutes = responsesRoutes.map((elem) => elem.json());
-//                     let responseRoutes = await Promise.all(promisesRoutes);
-//                     for (let i = 0; i < responseRoutes.length; i++) {
-//                         if (statusRoutes[i] != 200) {
-//                             if (statusRoutes[i] == 401) {
-//                                 bandUnauthorized = true
-//                             }
-//                             if (statusRoutes[i] == 404) {
-//                                 invalidRoutes.push(routes[i])
-//                             }
-//                             let obj = {
-//                                 "entity_id": routes[i],
-//                                 "status": statusRoutes[i],
-//                                 "error": ""
-//                             }
-//                             shipments.push(obj)
-//                         } else {
-//                             let uris = []
-//                             for (let j = 0; j < responseRoutes[i].shipments.length; j++) {
-//                                 let URI = config.URI_ML + responseRoutes[i].shipments[j].url + "?access_token=" + mlToken
-//                                 uris.push(fetch(URI, {
-//                                     method: 'GET'
-//                                 }))
-//                             }
-//                             let responsesShipments = await Promise.all(uris);
-//                             let statusShipments = responsesShipments.map((elem) => elem.status);
-//                             let promisesShipments = responsesShipments.map((elem) => elem.json());
-//                             let responseShipments = await Promise.all(promisesShipments);
-
-//                             let obj = responseRoutes[i]
-//                             for (let j = 0; j < responseShipments.length; j++) {
-//                                 if (statusShipments[j] != 200) {
-//                                     obj.shipments[j].shipment = {
-//                                         "status": statusShipments[j],
-//                                         "error": ""
-//                                     }
-//                                 } else {
-//                                     obj.shipments[j].shipment = responseShipments[j]
-
-//                                     // Pre-procesamiento
-//                                     let shipmentKeys = ["origin", "destination"]
-//                                     shipmentKeys.forEach((shipmentKey) => {
-//                                         // Agregamos la siguiente informacion (importante a la hora de timbrar con complemento carta porte) (colonia, localidad, municipio, pais, estado)
-//                                         let zipCode = obj.shipments[j].shipment[shipmentKey].address.zip_code
-//                                         let countryName = obj.shipments[j].shipment[shipmentKey].address.country.name
-//                                         let neighborhoodName = obj.shipments[j].shipment[shipmentKey].address.neighborhood.name
-//                                         let cityName = obj.shipments[j].shipment[shipmentKey].address.city.name
-
-//                                         let estado = catalogCP["c_CodigoPostal"][zipCode]
-//                                         estado = (estado == "DIF") ? "CMX" : estado
-//                                         let pais = catalogCP["c_Pais"][`${lowercaseAndRemoveAccents(countryName)}`]
-//                                         let colonia = catalogCP["c_Colonia"][zipCode][lowercaseAndRemoveAccents(neighborhoodName)]
-//                                         if(!colonia){
-//                                             colonia=catalogCP["c_Colonia"][zipCode][Object.keys(catalogCP["c_Colonia"][zipCode])[0]]
-//                                         }
-//                                         let localidad = catalogCP["c_Localidad"][`${lowercaseAndRemoveAccents(estado)}`][`${lowercaseAndRemoveAccents(cityName)}`]
-//                                         if(!localidad){
-//                                             localidad=catalogCP["c_Localidad"][`${lowercaseAndRemoveAccents(estado)}`][Object.keys(catalogCP["c_Localidad"][`${lowercaseAndRemoveAccents(estado)}`])[0]]
-//                                         }
-//                                         let municipio = catalogCP["c_Municipio"][`${lowercaseAndRemoveAccents(estado)}`][`${lowercaseAndRemoveAccents(cityName)}`]
-//                                         if(!municipio){
-//                                             municipio=catalogCP["c_Municipio"][`${lowercaseAndRemoveAccents(estado)}`][Object.keys(catalogCP["c_Municipio"][`${lowercaseAndRemoveAccents(estado)}`])[0]]
-//                                         }
-
-//                                         obj.shipments[j].shipment[shipmentKey].address.catalogKey = {
-//                                             "estado": estado,
-//                                             "colonia": colonia,
-//                                             "localidad": localidad,
-//                                             "municipio": municipio,
-//                                             "pais": pais,
-//                                         }
-
-//                                         // Arreglamos los textos para que sean adecuados
-//                                         obj.shipments[j].shipment[shipmentKey].fiscal_information.full_name = makePretty(obj.shipments[j].shipment[shipmentKey].fiscal_information.full_name)
-//                                         obj.shipments[j].shipment[shipmentKey].address.address_line = makePretty(obj.shipments[j].shipment[shipmentKey].address.address_line)
-//                                         obj.shipments[j].shipment[shipmentKey].address.street_name = makePretty(obj.shipments[j].shipment[shipmentKey].address.street_name)
-//                                         obj.shipments[j].shipment[shipmentKey].address.city.name = makePretty(obj.shipments[j].shipment[shipmentKey].address.city.name)
-//                                         obj.shipments[j].shipment[shipmentKey].address.state.name = makePretty(obj.shipments[j].shipment[shipmentKey].address.state.name)
-//                                         obj.shipments[j].shipment[shipmentKey].address.country.name = makePretty(obj.shipments[j].shipment[shipmentKey].address.country.name)
-//                                         obj.shipments[j].shipment[shipmentKey].address.neighborhood.name = makePretty(obj.shipments[j].shipment[shipmentKey].address.neighborhood.name)
-//                                         obj.shipments[j].shipment[shipmentKey].address.municipality.name = makePretty(obj.shipments[j].shipment[shipmentKey].address.municipality.name)
-//                                     })
-
-//                                     // Arreglamos los textos para que sean adecuados
-//                                     obj.shipments[j].shipment.recipient.full_name = makePretty(obj.shipments[j].shipment.recipient.full_name)
-
-//                                     // Modificamos para cada item el atributo 'dangerous_material' (mercado libre no concuerda en algunos con el sat)
-//                                     for (let k = 0; k < obj.shipments[j].shipment.package.items.length; k++) {
-//                                         let categorySat = obj.shipments[j].shipment.package.items[k].category_sat
-//                                         let dangerousMaterial = catalogCP["c_ClaveProdServCP"][categorySat]["Material Peligroso"]
-//                                         obj.shipments[j].shipment.package.items[k].dangerous_material = dangerousMaterial
-
-//                                         // Arreglamos los textos del item para que sean adecuados
-//                                         obj.shipments[j].shipment.package.items[k].description = makePretty(obj.shipments[j].shipment.package.items[k].description).substring(0, 1000)
-//                                         obj.shipments[j].shipment.package.items[k].package_description = makePretty(obj.shipments[j].shipment.package.items[k].package_description)
-//                                     }
-//                                 }
-//                             }
-//                             shipments.push(obj)
-//                         }
-//                     }
-
-//                     res.cookie('session', jwtToken)
-//                     if (bandUnauthorized) {
-//                         return res.status(401).json({ error: "", message: "Se ha vencido el token de 'Mercado Libre' y no fue posible renovarlo." })
-//                     }
-//                     if (invalidRoutes.length != 0) {
-//                         return res.status(404).json({ error: "", message: "Rutas no existentes: " + invalidRoutes.join(",") })
-//                     } else {
-//                         return res.status(200).json({ error: "", message: "La peticion fue satisfactoria.", shipments: shipments })
-//                     }
-//                 } catch (error) {
-//                     return res.status(400).json({ error: "", message: "Ha ocurrido un problema al realizar la peticion." })
-//                 }
-//             }
-//         } else {
-//             return res.status(400).json({ error: "", message: "La lista de rutas esta vacia." })
-//         }
-//     } else {
-//         return res.status(400).json({ error: "", message: "No se recibieron los datos completos." })
-//     }
-// }
