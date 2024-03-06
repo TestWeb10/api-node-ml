@@ -13,5 +13,6 @@ function _interopRequireWildcard(e, r) { if (!r && e && e.__esModule) return e; 
 var router = (0, _express.Router)();
 router.post("/cfdiTraslado", [middlewares.verifyJwtToken, middlewares.verifyUser], sicofiController.cfdiTraslado);
 router.post("/cfdiIngreso", [middlewares.verifyJwtToken, middlewares.verifyUser], sicofiController.cfdiIngreso);
+router.post("/cfdiTrasladoCP", [middlewares.verifyJwtToken, middlewares.verifyUser], sicofiController.cfdiTrasladoCP);
 router.post("/cfdiIngresoCP", [middlewares.verifyJwtToken, middlewares.verifyUser], sicofiController.cfdiIngresoCP);
 var _default = exports["default"] = router;

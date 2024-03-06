@@ -4,7 +4,7 @@ function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.cfdiTraslado = exports.cfdiIngresoCP = exports.cfdiIngreso = void 0;
+exports.cfdiTrasladoCP = exports.cfdiTraslado = exports.cfdiIngresoCP = exports.cfdiIngreso = void 0;
 var _Users = _interopRequireDefault(require("../models/Users"));
 var _config = _interopRequireDefault(require("../config"));
 var _jsonwebtoken = _interopRequireDefault(require("jsonwebtoken"));
@@ -44,133 +44,18 @@ Estructura:
 
 var cfdiTraslado = exports.cfdiTraslado = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var _req$body, DatosCFDI40, ReceptorCFDI40, ConceptosCFDI40, _req$decodedJwtToken, userId, mlToken, sicofiToken, jwtToken, _req$userData, user, usersModel, it, body, headers, URI, response, band, data;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          _req$body = req.body, DatosCFDI40 = _req$body.DatosCFDI40, ReceptorCFDI40 = _req$body.ReceptorCFDI40, ConceptosCFDI40 = _req$body.ConceptosCFDI40;
-          if (!(DatosCFDI40 && ReceptorCFDI40 && ConceptosCFDI40)) {
-            _context.next = 43;
-            break;
-          }
-          _req$decodedJwtToken = req.decodedJwtToken, userId = _req$decodedJwtToken.userId, mlToken = _req$decodedJwtToken.mlToken, sicofiToken = _req$decodedJwtToken.sicofiToken;
-          jwtToken = req.jwtToken;
-          _req$userData = req.userData, user = _req$userData.user, usersModel = _req$userData.usersModel;
-          it = 0;
-        case 6:
-          if (!(it < 2)) {
-            _context.next = 41;
-            break;
-          }
-          _context.prev = 7;
-          body = {
-            'Usuario': _Users["default"].decodeUsernameSicofi(user.username_sic),
-            'Contrasena': _Users["default"].decodePasswordSicofi(user.password_sic),
-            'DatosCFDI40': DatosCFDI40,
-            'ReceptorCFDI40': ReceptorCFDI40,
-            'ConceptosCFDI40': ConceptosCFDI40
-          };
-          headers = {
-            'Authorization': "Bearer " + sicofiToken,
-            'Content-Type': 'application/json'
-          };
-          URI = _config["default"].URI_SICOFI + "/Comprobante40/Factura40";
-          _context.next = 13;
-          return (0, _crossFetch["default"])(URI, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(body)
-          });
-        case 13:
-          response = _context.sent;
-          band = false;
-          if (!(response.status == 401 && it == 0)) {
-            _context.next = 21;
-            break;
-          }
-          _context.next = 18;
-          return _tokens["default"].getSicofiToken(_Users["default"].decodeUsernameSicofi(user.username_sic), _Users["default"].decodePasswordSicofi(user.password_sic));
-        case 18:
-          sicofiToken = _context.sent;
-          jwtToken = _jsonwebtoken["default"].sign({
-            userId: userId,
-            mlToken: mlToken,
-            sicofiToken: sicofiToken
-          }, _config["default"].JWT_SECRET, {
-            expiresIn: "1d"
-          });
-          band = true;
-        case 21:
-          if (!(band && it == 0)) {
-            _context.next = 23;
-            break;
-          }
-          return _context.abrupt("continue", 38);
-        case 23:
-          if (!(response.status == 401)) {
-            _context.next = 25;
-            break;
-          }
-          return _context.abrupt("return", res.status(401).json({
-            error: "",
-            message: "Se ha vencido el token de 'Sicofi' y no fue posible renovarlo.",
-            jwtToken: jwtToken
-          }));
-        case 25:
-          if (!(response.status == 400)) {
-            _context.next = 27;
-            break;
-          }
           return _context.abrupt("return", res.status(400).json({
             error: "",
-            message: "Ha ocurrido un problema al realizar la peticion. Los datos enviados a Sicofi estan mal.",
-            jwtToken: jwtToken
+            message: "CFDI traslado dado de baja :(."
           }));
-        case 27:
-          if (!(response.status == 200)) {
-            _context.next = 32;
-            break;
-          }
-          _context.next = 30;
-          return response.text();
-        case 30:
-          data = _context.sent;
-          return _context.abrupt("return", res.status(200).json({
-            error: "",
-            message: "Los datos se enviaron correctamente a Sicofi.",
-            jwtToken: jwtToken
-          }));
-        case 32:
-          return _context.abrupt("return", res.status(response.status).json({
-            error: "",
-            message: "La peticion no fue satisfactoria.",
-            jwtToken: jwtToken
-          }));
-        case 35:
-          _context.prev = 35;
-          _context.t0 = _context["catch"](7);
-          return _context.abrupt("return", res.status(400).json({
-            error: "",
-            message: "Ha ocurrido un problema al realizar la peticion.",
-            jwtToken: jwtToken
-          }));
-        case 38:
-          it++;
-          _context.next = 6;
-          break;
-        case 41:
-          _context.next = 44;
-          break;
-        case 43:
-          return _context.abrupt("return", res.status(400).json({
-            error: "",
-            message: "No se recibieron los datos completos."
-          }));
-        case 44:
+        case 1:
         case "end":
           return _context.stop();
       }
-    }, _callee, null, [[7, 35]]);
+    }, _callee);
   }));
   return function cfdiTraslado(_x, _x2) {
     return _ref.apply(this, arguments);
@@ -236,184 +121,37 @@ Estructura:
 
 var cfdiIngreso = exports.cfdiIngreso = /*#__PURE__*/function () {
   var _ref2 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2(req, res) {
-    var _req$body2, invoiceInformation, DatosCFDI40, ReceptorCFDI40, ConceptosCFDI40, _req$decodedJwtToken2, userId, mlToken, sicofiToken, jwtToken, _req$userData2, user, usersModel, it, body, headers, URI, response, band, data, obj, updatedUser;
     return _regeneratorRuntime().wrap(function _callee2$(_context2) {
       while (1) switch (_context2.prev = _context2.next) {
         case 0:
-          _req$body2 = req.body, invoiceInformation = _req$body2.invoiceInformation, DatosCFDI40 = _req$body2.DatosCFDI40, ReceptorCFDI40 = _req$body2.ReceptorCFDI40, ConceptosCFDI40 = _req$body2.ConceptosCFDI40;
-          if (!(invoiceInformation && DatosCFDI40 && ReceptorCFDI40 && ConceptosCFDI40)) {
-            _context2.next = 53;
-            break;
-          }
-          _req$decodedJwtToken2 = req.decodedJwtToken, userId = _req$decodedJwtToken2.userId, mlToken = _req$decodedJwtToken2.mlToken, sicofiToken = _req$decodedJwtToken2.sicofiToken;
-          jwtToken = req.jwtToken;
-          _req$userData2 = req.userData, user = _req$userData2.user, usersModel = _req$userData2.usersModel;
-          it = 0;
-        case 6:
-          if (!(it < 2)) {
-            _context2.next = 51;
-            break;
-          }
-          _context2.prev = 7;
-          body = {
-            'Usuario': _Users["default"].decodeUsernameSicofi(user.username_sic),
-            'Contrasena': _Users["default"].decodePasswordSicofi(user.password_sic),
-            'DatosCFDI40': DatosCFDI40,
-            'ReceptorCFDI40': ReceptorCFDI40,
-            'ConceptosCFDI40': ConceptosCFDI40
-          };
-          headers = {
-            'Authorization': "Bearer " + sicofiToken,
-            'Content-Type': 'application/json'
-          };
-          URI = _config["default"].URI_SICOFI + "/Comprobante40/Factura40";
-          _context2.next = 13;
-          return (0, _crossFetch["default"])(URI, {
-            method: 'POST',
-            headers: headers,
-            body: JSON.stringify(body)
-          });
-        case 13:
-          response = _context2.sent;
-          band = false;
-          if (!(response.status == 401 && it == 0)) {
-            _context2.next = 21;
-            break;
-          }
-          _context2.next = 18;
-          return _tokens["default"].getSicofiToken(_Users["default"].decodeUsernameSicofi(user.username_sic), _Users["default"].decodePasswordSicofi(user.password_sic));
-        case 18:
-          sicofiToken = _context2.sent;
-          jwtToken = _jsonwebtoken["default"].sign({
-            userId: userId,
-            mlToken: mlToken,
-            sicofiToken: sicofiToken
-          }, _config["default"].JWT_SECRET, {
-            expiresIn: "1d"
-          });
-          band = true;
-        case 21:
-          if (!(band && it == 0)) {
-            _context2.next = 23;
-            break;
-          }
-          return _context2.abrupt("continue", 48);
-        case 23:
-          if (!(response.status == 401)) {
-            _context2.next = 25;
-            break;
-          }
-          return _context2.abrupt("return", res.status(401).json({
-            error: "",
-            message: "Se ha vencido el token de 'Sicofi' y no fue posible renovarlo.",
-            jwtToken: jwtToken
-          }));
-        case 25:
-          if (!(response.status == 400)) {
-            _context2.next = 27;
-            break;
-          }
           return _context2.abrupt("return", res.status(400).json({
             error: "",
-            message: "Ha ocurrido un problema al realizar la peticion. Los datos enviados a Sicofi estan mal.",
-            jwtToken: jwtToken
+            message: "CFDI ingreso dado de baja :(."
           }));
-        case 27:
-          if (!(response.status == 200)) {
-            _context2.next = 42;
-            break;
-          }
-          _context2.next = 30;
-          return response.text();
-        case 30:
-          data = _context2.sent;
-          _context2.prev = 31;
-          obj = {
-            initial_date: invoiceInformation.initialDate,
-            final_date: invoiceInformation.finalDate,
-            subtotal: invoiceInformation.subtotal,
-            total_routes: invoiceInformation.totalRoutes
-          };
-          _context2.next = 35;
-          return usersModel.findOneAndUpdate({
-            "_id": userId
-          }, {
-            "$push": {
-              "invoices": obj
-            }
-          }, {
-            "new": true
-          }).select({
-            "_id": 0,
-            "invoices": 1
-          });
-        case 35:
-          updatedUser = _context2.sent;
-          return _context2.abrupt("return", res.status(200).json({
-            error: "",
-            message: "Los datos se enviaron correctamente a Sicofi. Ademas se ha guardado en la base de datos correctamente.",
-            jwtToken: jwtToken,
-            invoices: updatedUser.invoices
-          }));
-        case 39:
-          _context2.prev = 39;
-          _context2.t0 = _context2["catch"](31);
-          return _context2.abrupt("return", res.status(200).json({
-            error: "",
-            message: "Los datos se enviaron correctamente a Sicofi. Con el inconveniente de que no fue posible guardar en la base de datos correctamente.",
-            jwtToken: jwtToken,
-            invoices: user.invoices
-          }));
-        case 42:
-          return _context2.abrupt("return", res.status(response.status).json({
-            error: "",
-            message: "La peticion no fue satisfactoria.",
-            jwtToken: jwtToken
-          }));
-        case 45:
-          _context2.prev = 45;
-          _context2.t1 = _context2["catch"](7);
-          return _context2.abrupt("return", res.status(400).json({
-            error: "",
-            message: "Ha ocurrido un problema al realizar la peticion.",
-            jwtToken: jwtToken
-          }));
-        case 48:
-          it++;
-          _context2.next = 6;
-          break;
-        case 51:
-          _context2.next = 54;
-          break;
-        case 53:
-          return _context2.abrupt("return", res.status(400).json({
-            error: "",
-            message: "No se recibieron los datos completos."
-          }));
-        case 54:
+        case 1:
         case "end":
           return _context2.stop();
       }
-    }, _callee2, null, [[7, 45], [31, 39]]);
+    }, _callee2);
   }));
   return function cfdiIngreso(_x3, _x4) {
     return _ref2.apply(this, arguments);
   };
 }();
-var cfdiIngresoCP = exports.cfdiIngresoCP = /*#__PURE__*/function () {
+var cfdiTrasladoCP = exports.cfdiTrasladoCP = /*#__PURE__*/function () {
   var _ref3 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3(req, res) {
-    var _req$body3, invoiceInformation, DatosCFDI40, ReceptorCFDI40, ConceptosCFDI40, CartaPorte30, _req$decodedJwtToken3, userId, mlToken, sicofiToken, jwtToken, _req$userData3, user, usersModel, userType, _loop, _ret, it;
+    var _req$body, invoiceInformation, DatosCFDI40, ReceptorCFDI40, ConceptosCFDI40, CartaPorte30, _req$decodedJwtToken, userId, mlToken, sicofiToken, jwtToken, _req$userData, user, usersModel, userType, _loop, _ret, it;
     return _regeneratorRuntime().wrap(function _callee3$(_context4) {
       while (1) switch (_context4.prev = _context4.next) {
         case 0:
-          _req$body3 = req.body, invoiceInformation = _req$body3.invoiceInformation, DatosCFDI40 = _req$body3.DatosCFDI40, ReceptorCFDI40 = _req$body3.ReceptorCFDI40, ConceptosCFDI40 = _req$body3.ConceptosCFDI40, CartaPorte30 = _req$body3.CartaPorte30;
+          _req$body = req.body, invoiceInformation = _req$body.invoiceInformation, DatosCFDI40 = _req$body.DatosCFDI40, ReceptorCFDI40 = _req$body.ReceptorCFDI40, ConceptosCFDI40 = _req$body.ConceptosCFDI40, CartaPorte30 = _req$body.CartaPorte30;
           if (!(invoiceInformation && DatosCFDI40 && ReceptorCFDI40 && ConceptosCFDI40 && CartaPorte30)) {
             _context4.next = 20;
             break;
           }
-          _req$decodedJwtToken3 = req.decodedJwtToken, userId = _req$decodedJwtToken3.userId, mlToken = _req$decodedJwtToken3.mlToken, sicofiToken = _req$decodedJwtToken3.sicofiToken;
+          _req$decodedJwtToken = req.decodedJwtToken, userId = _req$decodedJwtToken.userId, mlToken = _req$decodedJwtToken.mlToken, sicofiToken = _req$decodedJwtToken.sicofiToken;
           jwtToken = req.jwtToken;
-          _req$userData3 = req.userData, user = _req$userData3.user, usersModel = _req$userData3.usersModel;
+          _req$userData = req.userData, user = _req$userData.user, usersModel = _req$userData.usersModel;
           userType = user.user_type;
           _loop = /*#__PURE__*/_regeneratorRuntime().mark(function _loop() {
             var body, headers, URI, response, band, resJson, _message, invoiceText, obj, updatedUser, message;
@@ -444,7 +182,7 @@ var cfdiIngresoCP = exports.cfdiIngresoCP = /*#__PURE__*/function () {
                   response = _context3.sent;
                   // Para guardar el contenido de la peticion
                   // try {
-                  //     await fs.writeFile("/home/chuy/Descargas/test_full_5.json", JSON.stringify(body));
+                  //     await fs.writeFile("/home/chuy/Descargas/test_cfdit_2.json", JSON.stringify(body));
                   //     console.log("Saved");
                   // } catch (err) {
                   //     console.log(err);
@@ -633,7 +371,244 @@ var cfdiIngresoCP = exports.cfdiIngresoCP = /*#__PURE__*/function () {
       }
     }, _callee3);
   }));
-  return function cfdiIngresoCP(_x5, _x6) {
+  return function cfdiTrasladoCP(_x5, _x6) {
     return _ref3.apply(this, arguments);
+  };
+}();
+var cfdiIngresoCP = exports.cfdiIngresoCP = /*#__PURE__*/function () {
+  var _ref4 = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4(req, res) {
+    var _req$body2, invoiceInformation, DatosCFDI40, ReceptorCFDI40, ConceptosCFDI40, CartaPorte30, _req$decodedJwtToken2, userId, mlToken, sicofiToken, jwtToken, _req$userData2, user, usersModel, userType, _loop2, _ret2, it;
+    return _regeneratorRuntime().wrap(function _callee4$(_context6) {
+      while (1) switch (_context6.prev = _context6.next) {
+        case 0:
+          _req$body2 = req.body, invoiceInformation = _req$body2.invoiceInformation, DatosCFDI40 = _req$body2.DatosCFDI40, ReceptorCFDI40 = _req$body2.ReceptorCFDI40, ConceptosCFDI40 = _req$body2.ConceptosCFDI40, CartaPorte30 = _req$body2.CartaPorte30;
+          if (!(invoiceInformation && DatosCFDI40 && ReceptorCFDI40 && ConceptosCFDI40 && CartaPorte30)) {
+            _context6.next = 20;
+            break;
+          }
+          _req$decodedJwtToken2 = req.decodedJwtToken, userId = _req$decodedJwtToken2.userId, mlToken = _req$decodedJwtToken2.mlToken, sicofiToken = _req$decodedJwtToken2.sicofiToken;
+          jwtToken = req.jwtToken;
+          _req$userData2 = req.userData, user = _req$userData2.user, usersModel = _req$userData2.usersModel;
+          userType = user.user_type;
+          _loop2 = /*#__PURE__*/_regeneratorRuntime().mark(function _loop2() {
+            var body, headers, URI, response, band, resJson, _message2, invoiceText, obj, updatedUser, message;
+            return _regeneratorRuntime().wrap(function _loop2$(_context5) {
+              while (1) switch (_context5.prev = _context5.next) {
+                case 0:
+                  _context5.prev = 0;
+                  body = {
+                    'Usuario': _Users["default"].decodeUsernameSicofi(user.username_sic),
+                    'Contrasena': _Users["default"].decodePasswordSicofi(user.password_sic),
+                    'DatosCFDI40': DatosCFDI40,
+                    'ReceptorCFDI40': ReceptorCFDI40,
+                    'ConceptosCFDI40': ConceptosCFDI40,
+                    'CartaPorte30': CartaPorte30
+                  };
+                  headers = {
+                    'Authorization': "Bearer " + sicofiToken,
+                    'Content-Type': 'application/json'
+                  };
+                  URI = userType == "demo" ? _config["default"].URI_DEMO_SICOFI + "/Comprobante40/Factura40" : _config["default"].URI_PRODUCTION_SICOFI + "/Comprobante40/Factura40";
+                  _context5.next = 6;
+                  return (0, _crossFetch["default"])(URI, {
+                    method: 'POST',
+                    headers: headers,
+                    body: JSON.stringify(body)
+                  });
+                case 6:
+                  response = _context5.sent;
+                  // Para guardar el contenido de la peticion
+                  // try {
+                  //     await fs.writeFile("/home/chuy/Descargas/test_full_5.json", JSON.stringify(body));
+                  //     console.log("Saved");
+                  // } catch (err) {
+                  //     console.log(err);
+                  // }
+                  band = false;
+                  if (!(response.status == 401 && it == 0)) {
+                    _context5.next = 14;
+                    break;
+                  }
+                  _context5.next = 11;
+                  return _tokens["default"].getSicofiToken(_Users["default"].decodeUsernameSicofi(user.username_sic), _Users["default"].decodePasswordSicofi(user.password_sic), userType);
+                case 11:
+                  sicofiToken = _context5.sent;
+                  jwtToken = _jsonwebtoken["default"].sign({
+                    userId: userId,
+                    mlToken: mlToken,
+                    sicofiToken: sicofiToken
+                  }, _config["default"].JWT_SECRET, {
+                    expiresIn: "1d"
+                  });
+                  band = true;
+                case 14:
+                  if (!(band && it == 0)) {
+                    _context5.next = 16;
+                    break;
+                  }
+                  return _context5.abrupt("return", 0);
+                case 16:
+                  if (!(response.status == 401)) {
+                    _context5.next = 18;
+                    break;
+                  }
+                  return _context5.abrupt("return", {
+                    v: res.status(401).json({
+                      error: "",
+                      message: "Se ha vencido el token de 'Sicofi' y no fue posible renovarlo.",
+                      jwtToken: jwtToken
+                    })
+                  });
+                case 18:
+                  if (!(response.status == 400)) {
+                    _context5.next = 26;
+                    break;
+                  }
+                  _context5.next = 21;
+                  return response.json();
+                case 21:
+                  resJson = _context5.sent;
+                  // console.log(resJson);
+                  _message2 = "Ha ocurrido un problema al realizar la peticion. Los datos enviados a Sicofi estan mal.";
+                  if (resJson.errors) {
+                    _message2 += "\n\nERRORES (Sicofi)";
+                    Object.keys(resJson.errors).forEach(function (key) {
+                      var descriptionErrors = resJson.errors[key];
+                      _message2 += "\n".concat(key, ":");
+                      descriptionErrors.forEach(function (description) {
+                        _message2 += "\n\t * ".concat(description);
+                      });
+                    });
+                  }
+                  if (resJson.message) {
+                    _message2 += "\n\nERRORES (Sicofi)\n".concat(resJson.message);
+                  }
+                  return _context5.abrupt("return", {
+                    v: res.status(400).json({
+                      error: "",
+                      message: _message2,
+                      jwtToken: jwtToken
+                    })
+                  });
+                case 26:
+                  if (!(response.status == 200)) {
+                    _context5.next = 41;
+                    break;
+                  }
+                  _context5.next = 29;
+                  return response.text();
+                case 29:
+                  invoiceText = _context5.sent;
+                  _context5.prev = 30;
+                  obj = {
+                    initial_date: invoiceInformation.initialDate,
+                    final_date: invoiceInformation.finalDate,
+                    subtotal: invoiceInformation.subtotal,
+                    total_routes: invoiceInformation.totalRoutes
+                  };
+                  _context5.next = 34;
+                  return usersModel.findOneAndUpdate({
+                    "_id": userId
+                  }, {
+                    "$push": {
+                      "invoices": obj
+                    }
+                  }, {
+                    "new": true
+                  }).select({
+                    "_id": 0,
+                    "invoices": 1
+                  });
+                case 34:
+                  updatedUser = _context5.sent;
+                  return _context5.abrupt("return", {
+                    v: res.status(200).json({
+                      error: "",
+                      message: "Los datos se enviaron correctamente a Sicofi. Ademas se ha guardado en la base de datos correctamente.",
+                      jwtToken: jwtToken,
+                      invoices: updatedUser.invoices,
+                      invoiceText: invoiceText
+                    })
+                  });
+                case 38:
+                  _context5.prev = 38;
+                  _context5.t0 = _context5["catch"](30);
+                  return _context5.abrupt("return", {
+                    v: res.status(200).json({
+                      error: "",
+                      message: "Los datos se enviaron correctamente a Sicofi. Con el inconveniente de que no fue posible guardar en la base de datos correctamente.",
+                      jwtToken: jwtToken,
+                      invoices: user.invoices
+                    })
+                  });
+                case 41:
+                  message = "La peticion no fue satisfactoria.";
+                  if (response.status == 504) {
+                    // Se agoto el tiempo (suele suceder cuando se envia mucha informacion o cuando Sicofi esta muy saturado, es decir, esta lento)
+                    message += "\nSicofi ha rechazado la peticion.\nPuede ser que Sicofi este muy saturado o enviar menos informacion puede funcionar.";
+                  }
+                  return _context5.abrupt("return", {
+                    v: res.status(response.status).json({
+                      error: "",
+                      message: message,
+                      jwtToken: jwtToken
+                    })
+                  });
+                case 46:
+                  _context5.prev = 46;
+                  _context5.t1 = _context5["catch"](0);
+                  return _context5.abrupt("return", {
+                    v: res.status(400).json({
+                      error: "",
+                      message: "Ha ocurrido un problema al realizar la peticion.",
+                      jwtToken: jwtToken
+                    })
+                  });
+                case 49:
+                case "end":
+                  return _context5.stop();
+              }
+            }, _loop2, null, [[0, 46], [30, 38]]);
+          });
+          it = 0;
+        case 8:
+          if (!(it < 2)) {
+            _context6.next = 18;
+            break;
+          }
+          return _context6.delegateYield(_loop2(), "t0", 10);
+        case 10:
+          _ret2 = _context6.t0;
+          if (!(_ret2 === 0)) {
+            _context6.next = 13;
+            break;
+          }
+          return _context6.abrupt("continue", 15);
+        case 13:
+          if (!_ret2) {
+            _context6.next = 15;
+            break;
+          }
+          return _context6.abrupt("return", _ret2.v);
+        case 15:
+          it++;
+          _context6.next = 8;
+          break;
+        case 18:
+          _context6.next = 21;
+          break;
+        case 20:
+          return _context6.abrupt("return", res.status(400).json({
+            error: "",
+            message: "No se recibieron los datos completos."
+          }));
+        case 21:
+        case "end":
+          return _context6.stop();
+      }
+    }, _callee4);
+  }));
+  return function cfdiIngresoCP(_x7, _x8) {
+    return _ref4.apply(this, arguments);
   };
 }();
