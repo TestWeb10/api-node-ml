@@ -284,7 +284,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           }
           return _context3.abrupt("return", res.status(404).json({
             error: "",
-            message: "Rutas no existentes: " + invalidRoutes.join(","),
+            message: "Rutas no existentes: " + invalidRoutes.join(", "),
             jwtToken: jwtToken
           }));
         case 50:
