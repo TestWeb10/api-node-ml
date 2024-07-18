@@ -12,5 +12,8 @@ module.exports = {
   URI_ML: process.env.URI_ML,
   URI_DEMO_SICOFI: process.env.URI_DEMO_SICOFI,
   URI_PRODUCTION_SICOFI: process.env.URI_PRODUCTION_SICOFI,
-  URI_APP: process.env.URI_APP
+  URI_APP: process.env.URI_APP,
+  URI_INVOICE: process.env.URI_INVOICE,
+  CFDI_VERSION: process.env.CFDI_VERSION,
+  CP_VERSION: process.env.CP_VERSION
 };
