@@ -38,17 +38,17 @@ Estructura:
 
 var getShipments = exports.getShipments = /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(req, res) {
-    var routes, _req$decodedJwtToken, userId, mlToken, sicofiToken, jwtToken, _req$userData, user, usersModel, it, shipments, bandUnauthorized, invalidRoutes, uris, i, URI, responsesRoutes, statusRoutes, band, _i, promisesRoutes, responseRoutes, _loop, _i2;
+    var routes, _req$decodedJwtToken, userId, mlToken, sicofiToken, jwtToken, _req$userData, user, usersModel, it, shipments, unauthorizedRoutes, invalidRoutes, uris, i, URI, responsesRoutes, statusRoutes, band, _i, promisesRoutes, responseRoutes, _loop, _i2;
     return _regeneratorRuntime().wrap(function _callee$(_context3) {
       while (1) switch (_context3.prev = _context3.next) {
         case 0:
           routes = req.body.routes;
           if (!routes) {
-            _context3.next = 65;
+            _context3.next = 64;
             break;
           }
           if (!(routes.length > 0)) {
-            _context3.next = 62;
+            _context3.next = 61;
             break;
           }
           _req$decodedJwtToken = req.decodedJwtToken, userId = _req$decodedJwtToken.userId, mlToken = _req$decodedJwtToken.mlToken, sicofiToken = _req$decodedJwtToken.sicofiToken;
@@ -57,12 +57,12 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           it = 0;
         case 7:
           if (!(it < 2)) {
-            _context3.next = 60;
+            _context3.next = 59;
             break;
           }
           _context3.prev = 8;
           shipments = [];
-          bandUnauthorized = false;
+          unauthorizedRoutes = [];
           invalidRoutes = [];
           uris = [];
           for (i = 0; i < routes.length; i++) {
@@ -111,7 +111,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             _context3.next = 33;
             break;
           }
-          return _context3.abrupt("continue", 57);
+          return _context3.abrupt("continue", 56);
         case 33:
           promisesRoutes = responsesRoutes.map(function (elem) {
             return elem.json();
@@ -130,7 +130,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
                     break;
                   }
                   if (statusRoutes[_i2] == 401) {
-                    bandUnauthorized = true;
+                    unauthorizedRoutes.push(routes[_i2]);
                   }
                   if (statusRoutes[_i2] == 404) {
                     invalidRoutes.push(routes[_i2]);
@@ -272,13 +272,13 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           _context3.next = 39;
           break;
         case 44:
-          if (!bandUnauthorized) {
+          if (!(unauthorizedRoutes.length != 0)) {
             _context3.next = 46;
             break;
           }
           return _context3.abrupt("return", res.status(401).json({
             error: "",
-            message: "Se ha vencido el token de 'Mercado Libre' y no fue posible renovarlo.",
+            message: "Rutas que no se pudieron obtener debido a que no se tenia autorizacion: " + unauthorizedRoutes.join(", "),
             jwtToken: jwtToken
           }));
         case 46:
@@ -299,38 +299,37 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             shipments: shipments
           }));
         case 51:
-          _context3.next = 57;
+          _context3.next = 56;
           break;
         case 53:
           _context3.prev = 53;
           _context3.t1 = _context3["catch"](8);
-          console.log(_context3.t1);
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "Ha ocurrido un problema al realizar la peticion.",
             jwtToken: jwtToken
           }));
-        case 57:
+        case 56:
           it++;
           _context3.next = 7;
           break;
-        case 60:
-          _context3.next = 63;
+        case 59:
+          _context3.next = 62;
           break;
-        case 62:
+        case 61:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "La lista de rutas esta vacia."
           }));
-        case 63:
-          _context3.next = 66;
+        case 62:
+          _context3.next = 65;
           break;
-        case 65:
+        case 64:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "No se recibieron los datos completos."
           }));
-        case 66:
+        case 65:
         case "end":
           return _context3.stop();
       }

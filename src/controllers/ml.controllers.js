@@ -38,7 +38,7 @@ export const getShipments = async (req, res) => {
             for (let it = 0; it < 2; it++) {
                 try {
                     let shipments = []
-                    let bandUnauthorized = false
+                    let unauthorizedRoutes = []
                     let invalidRoutes = []
                     let uris = []
                     for (let i = 0; i < routes.length; i++) {
@@ -73,7 +73,7 @@ export const getShipments = async (req, res) => {
                     for (let i = 0; i < responseRoutes.length; i++) {
                         if (statusRoutes[i] != 200) {
                             if (statusRoutes[i] == 401) {
-                                bandUnauthorized = true
+                                unauthorizedRoutes.push(routes[i])
                             }
                             if (statusRoutes[i] == 404) {
                                 invalidRoutes.push(routes[i])
@@ -175,8 +175,9 @@ export const getShipments = async (req, res) => {
 
                     // res.cookie('session', jwtToken)
                     // res.setHeader('Cache-Control', 'private')
-                    if (bandUnauthorized) {
-                        return res.status(401).json({ error: "", message: "Se ha vencido el token de 'Mercado Libre' y no fue posible renovarlo.", jwtToken: jwtToken })
+                    if (unauthorizedRoutes.length != 0) {
+                        // return res.status(401).json({ error: "", message: "Se ha vencido el token de 'Mercado Libre' y no fue posible renovarlo.", jwtToken: jwtToken })
+                        return res.status(401).json({ error: "", message: "Rutas que no se pudieron obtener debido a que no se tenia autorizacion: " + unauthorizedRoutes.join(", "), jwtToken: jwtToken })
                     }
                     if (invalidRoutes.length != 0) {
                         return res.status(404).json({ error: "", message: "Rutas no existentes: " + invalidRoutes.join(", "), jwtToken: jwtToken })
@@ -191,7 +192,7 @@ export const getShipments = async (req, res) => {
                         return res.status(200).json({ error: "", message: "La peticion fue satisfactoria.", jwtToken: jwtToken, shipments: shipments })
                     }
                 } catch (error) {
-                    console.log(error);
+                    // console.log(error);
                     return res.status(400).json({ error: "", message: "Ha ocurrido un problema al realizar la peticion.", jwtToken: jwtToken })
                 }
             }

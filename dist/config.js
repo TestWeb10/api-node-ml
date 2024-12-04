@@ -15,5 +15,6 @@ module.exports = {
   URI_APP: process.env.URI_APP,
   URI_INVOICE: process.env.URI_INVOICE,
   CFDI_VERSION: process.env.CFDI_VERSION,
-  CP_VERSION: process.env.CP_VERSION
+  CP_VERSION: process.env.CP_VERSION,
+  ENVIRONMENT: process.env.ENVIRONMENT
 };

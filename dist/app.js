@@ -17,9 +17,6 @@ var _sicofi = _interopRequireDefault(require("./routes/sicofi.routes"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // Este archivo sirve para configurar la aplicacion de express
 
-// SOLO EN DESARROLLO
-// import morgan from "morgan";
-
 // Importamos rutas para un apartado en especifico
 
 // Iniciamos express
@@ -40,8 +37,10 @@ app.use((0, _cors["default"])({
   origin: _config["default"].URI_APP,
   credentials: true
 }));
-// SOLO EN DESARROLLO
-// app.use(morgan("dev"))
+if (_config["default"].ENVIRONMENT == "dev") {
+  var morgan = require("morgan");
+  app.use(morgan("dev"));
+}
 // Si se envia poca informacion 
 //app.use(express.json())
 // Si se envia mucha informacion

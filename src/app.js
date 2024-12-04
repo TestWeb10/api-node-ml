@@ -3,8 +3,6 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser"
-// SOLO EN DESARROLLO
-// import morgan from "morgan";
 import pkg from "../package.json"
 import config from './config'
 import {connectToDb} from "./db/dbConnection"
@@ -33,8 +31,10 @@ app.use(cors({
     origin: config.URI_APP,
     credentials: true
 }))
-// SOLO EN DESARROLLO
-// app.use(morgan("dev"))
+if(config.ENVIRONMENT == "dev"){
+    const morgan=require("morgan")
+    app.use(morgan("dev"))
+}
 // Si se envia poca informacion 
 //app.use(express.json())
 // Si se envia mucha informacion
