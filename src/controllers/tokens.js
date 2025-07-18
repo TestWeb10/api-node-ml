@@ -24,7 +24,7 @@ class Tokens {
                 const text = await response.text();
                 try {
                     const data = JSON.parse(text);
-                    console.log(`(getMLToken) data:  ${data}`);
+                    // console.log(`(getMLToken) data:  ${data}`);
                     if (data.access_token) {
                         return data.access_token
                     } else {
