@@ -21,7 +21,7 @@ var Tokens = /*#__PURE__*/function () {
     key: "getMLToken",
     value: function () {
       var _getMLToken = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(client_id, client_secret, grant_type) {
-        var expiredToken, params, URI, response, text, data;
+        var expiredToken, axiosInstance, res, data;
         return _regeneratorRuntime().wrap(function _callee$(_context) {
           while (1) switch (_context.prev = _context.next) {
             case 0:
@@ -31,60 +31,48 @@ var Tokens = /*#__PURE__*/function () {
               // return "APP_USR-2609380014923051-020902-2bf1326747d177d80169e7885a530f03-1083177088"
               expiredToken = "APP_USR-2609380014923051-020621-de1db78888d74d9e65476d3c9ac8d7d2-1083177088";
               if (!(client_id && client_secret && grant_type)) {
-                _context.next = 34;
+                _context.next = 21;
                 break;
               }
-              params = new URLSearchParams();
-              params.append('client_id', client_id);
-              params.append('client_secret', client_secret);
-              params.append('grant_type', grant_type);
-              URI = _config["default"].URI_ML + "/oauth/token";
-              _context.prev = 7;
-              _context.next = 10;
-              return (0, _crossFetch["default"])(URI, {
-                method: 'POST',
-                body: params
+              _context.prev = 2;
+              axiosInstance = _axios["default"].create({
+                baseURL: _config["default"].URI_ML,
+                withCredentials: true
               });
-            case 10:
-              response = _context.sent;
-              _context.next = 13;
-              return response.text();
-            case 13:
-              text = _context.sent;
-              _context.prev = 14;
-              data = JSON.parse(text); // console.log(`(getMLToken) data:  ${data}`);
+              _context.next = 6;
+              return axiosInstance.post("/oauth/token", {
+                client_id: client_id,
+                client_secret: client_secret,
+                grant_type: grant_type
+              });
+            case 6:
+              res = _context.sent;
+              data = res.data; // console.log(`(getMLToken) data:  ${data}`);
               if (!data.access_token) {
-                _context.next = 20;
+                _context.next = 12;
                 break;
               }
               return _context.abrupt("return", data.access_token);
-            case 20:
+            case 12:
               return _context.abrupt("return", expiredToken);
+            case 13:
+              _context.next = 19;
+              break;
+            case 15:
+              _context.prev = 15;
+              _context.t0 = _context["catch"](2);
+              console.log("(getMLToken) error:  ".concat(_context.t0));
+              return _context.abrupt("return", expiredToken);
+            case 19:
+              _context.next = 22;
+              break;
             case 21:
-              _context.next = 26;
-              break;
-            case 23:
-              _context.prev = 23;
-              _context.t0 = _context["catch"](14);
-              console.log("(getMLToken) No es un json valido la respuesta. La respuesta es:  ".concat(text));
-            case 26:
-              _context.next = 32;
-              break;
-            case 28:
-              _context.prev = 28;
-              _context.t1 = _context["catch"](7);
-              console.log("(getMLToken) error:  ".concat(_context.t1));
               return _context.abrupt("return", expiredToken);
-            case 32:
-              _context.next = 35;
-              break;
-            case 34:
-              return _context.abrupt("return", expiredToken);
-            case 35:
+            case 22:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[7, 28], [14, 23]]);
+        }, _callee, null, [[2, 15]]);
       }));
       function getMLToken(_x, _x2, _x3) {
         return _getMLToken.apply(this, arguments);

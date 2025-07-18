@@ -10,33 +10,58 @@ class Tokens {
         // return "APP_USR-2609380014923051-020902-2bf1326747d177d80169e7885a530f03-1083177088"
         let expiredToken = "APP_USR-2609380014923051-020621-de1db78888d74d9e65476d3c9ac8d7d2-1083177088"
         if (client_id && client_secret && grant_type) {
-            const params = new URLSearchParams();
-            params.append('client_id', client_id);
-            params.append('client_secret', client_secret);
-            params.append('grant_type', grant_type);
-
-            const URI = config.URI_ML + "/oauth/token"
+            // AXIOS
             try {
-                const response = await fetch(URI, {
-                    method: 'POST',
-                    body: params
-                });
-                const text = await response.text();
-                try {
-                    const data = JSON.parse(text);
-                    // console.log(`(getMLToken) data:  ${data}`);
-                    if (data.access_token) {
-                        return data.access_token
-                    } else {
-                        return expiredToken
-                    }
-                } catch (error) {
-                    console.log(`(getMLToken) No es un json valido la respuesta. La respuesta es:  ${text}`);
+                const axiosInstance = axios.create({
+                    baseURL: config.URI_ML,
+                    withCredentials: true
+                })
+                const res = await axiosInstance.post("/oauth/token", {
+                    client_id: client_id,
+                    client_secret: client_secret,
+                    grant_type: grant_type
+                })
+                const data = res.data
+                // console.log(`(getMLToken) data:  ${data}`);
+                if (data.access_token) {
+                    return data.access_token
+                } else {
+                    return expiredToken
                 }
             } catch (error) {
                 console.log(`(getMLToken) error:  ${error}`);
                 return expiredToken
             }
+
+            // FETCH
+            // const params = new URLSearchParams();
+            // params.append('client_id', client_id);
+            // params.append('client_secret', client_secret);
+            // params.append('grant_type', grant_type);
+
+            // const URI = config.URI_ML + "/oauth/token"
+
+            // try {
+            //     const response = await fetch(URI, {
+            //         method: 'POST',
+            //         body: params
+            //     });
+            //     const text = await response.text();
+            //     try {
+            //         const data = JSON.parse(text);
+            //         // console.log(`(getMLToken) data:  ${data}`);
+            //         if (data.access_token) {
+            //             return data.access_token
+            //         } else {
+            //             return expiredToken
+            //         }
+            //     } catch (error) {
+            //         console.log(`(getMLToken) No es un json valido la respuesta. La respuesta es:  ${text}`);
+            //     }
+            // } catch (error) {
+            //     console.log(`(getMLToken) error:  ${error}`);
+            //     return expiredToken
+            // }
         } else {
             return expiredToken
         }
