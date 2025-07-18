@@ -192,7 +192,8 @@ export const getShipments = async (req, res) => {
                         return res.status(200).json({ error: "", message: "La peticion fue satisfactoria.", jwtToken: jwtToken, shipments: shipments })
                     }
                 } catch (error) {
-                    // console.log(error);
+                    // Para mostrar informacion del error 
+                    console.log(`(getShipments) error:  ${error}`);
                     return res.status(400).json({ error: "", message: "Ha ocurrido un problema al realizar la peticion.", jwtToken: jwtToken })
                 }
             }

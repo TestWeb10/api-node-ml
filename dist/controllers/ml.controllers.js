@@ -44,11 +44,11 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
         case 0:
           routes = req.body.routes;
           if (!routes) {
-            _context3.next = 64;
+            _context3.next = 65;
             break;
           }
           if (!(routes.length > 0)) {
-            _context3.next = 61;
+            _context3.next = 62;
             break;
           }
           _req$decodedJwtToken = req.decodedJwtToken, userId = _req$decodedJwtToken.userId, mlToken = _req$decodedJwtToken.mlToken, sicofiToken = _req$decodedJwtToken.sicofiToken;
@@ -57,7 +57,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           it = 0;
         case 7:
           if (!(it < 2)) {
-            _context3.next = 59;
+            _context3.next = 60;
             break;
           }
           _context3.prev = 8;
@@ -111,7 +111,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             _context3.next = 33;
             break;
           }
-          return _context3.abrupt("continue", 56);
+          return _context3.abrupt("continue", 57);
         case 33:
           promisesRoutes = responsesRoutes.map(function (elem) {
             return elem.json();
@@ -299,37 +299,39 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             shipments: shipments
           }));
         case 51:
-          _context3.next = 56;
+          _context3.next = 57;
           break;
         case 53:
           _context3.prev = 53;
           _context3.t1 = _context3["catch"](8);
+          // Para mostrar informacion del error 
+          console.log("(getShipments) error:  ".concat(_context3.t1));
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "Ha ocurrido un problema al realizar la peticion.",
             jwtToken: jwtToken
           }));
-        case 56:
+        case 57:
           it++;
           _context3.next = 7;
           break;
-        case 59:
-          _context3.next = 62;
+        case 60:
+          _context3.next = 63;
           break;
-        case 61:
+        case 62:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "La lista de rutas esta vacia."
           }));
-        case 62:
-          _context3.next = 65;
+        case 63:
+          _context3.next = 66;
           break;
-        case 64:
+        case 65:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "No se recibieron los datos completos."
           }));
-        case 65:
+        case 66:
         case "end":
           return _context3.stop();
       }

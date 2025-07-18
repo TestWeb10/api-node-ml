@@ -22,12 +22,14 @@ class Tokens {
                     body: params
                 });
                 const data = await response.json();
+                console.log(`(getMLToken) data:  ${data}`);
                 if (data.access_token) {
                     return data.access_token
                 } else {
                     return expiredToken
                 }
             } catch (error) {
+                console.log(`(getMLToken) error:  ${error}`);
                 return expiredToken
             }
         } else {

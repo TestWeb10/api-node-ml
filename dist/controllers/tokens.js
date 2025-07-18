@@ -31,7 +31,7 @@ var Tokens = /*#__PURE__*/function () {
               // return "APP_USR-2609380014923051-020902-2bf1326747d177d80169e7885a530f03-1083177088"
               expiredToken = "APP_USR-2609380014923051-020621-de1db78888d74d9e65476d3c9ac8d7d2-1083177088";
               if (!(client_id && client_secret && grant_type)) {
-                _context.next = 26;
+                _context.next = 28;
                 break;
               }
               params = new URLSearchParams();
@@ -51,30 +51,32 @@ var Tokens = /*#__PURE__*/function () {
               return response.json();
             case 13:
               data = _context.sent;
+              console.log("(getMLToken) data:  ".concat(data));
               if (!data.access_token) {
-                _context.next = 18;
+                _context.next = 19;
                 break;
               }
               return _context.abrupt("return", data.access_token);
-            case 18:
-              return _context.abrupt("return", expiredToken);
             case 19:
-              _context.next = 24;
+              return _context.abrupt("return", expiredToken);
+            case 20:
+              _context.next = 26;
               break;
-            case 21:
-              _context.prev = 21;
+            case 22:
+              _context.prev = 22;
               _context.t0 = _context["catch"](7);
+              console.log("(getMLToken) error:  ".concat(_context.t0));
               return _context.abrupt("return", expiredToken);
-            case 24:
-              _context.next = 27;
-              break;
             case 26:
+              _context.next = 29;
+              break;
+            case 28:
               return _context.abrupt("return", expiredToken);
-            case 27:
+            case 29:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[7, 21]]);
+        }, _callee, null, [[7, 22]]);
       }));
       function getMLToken(_x, _x2, _x3) {
         return _getMLToken.apply(this, arguments);
