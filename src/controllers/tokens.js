@@ -22,13 +22,16 @@ class Tokens {
                     body: params
                 });
                 const text = await response.text();
-                console.log(`(getMLToken) text:  ${text}`);
-                const data = await response.json();
-                console.log(`(getMLToken) data:  ${data}`);
-                if (data.access_token) {
-                    return data.access_token
-                } else {
-                    return expiredToken
+                try {
+                    const data = JSON.parse(text);
+                    console.log(`(getMLToken) data:  ${data}`);
+                    if (data.access_token) {
+                        return data.access_token
+                    } else {
+                        return expiredToken
+                    }
+                } catch (error) {
+                    console.log(`(getMLToken) No es un json valido la respuesta. La respuesta es:  ${text}`);
                 }
             } catch (error) {
                 console.log(`(getMLToken) error:  ${error}`);

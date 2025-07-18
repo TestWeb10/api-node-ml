@@ -31,7 +31,7 @@ var Tokens = /*#__PURE__*/function () {
               // return "APP_USR-2609380014923051-020902-2bf1326747d177d80169e7885a530f03-1083177088"
               expiredToken = "APP_USR-2609380014923051-020621-de1db78888d74d9e65476d3c9ac8d7d2-1083177088";
               if (!(client_id && client_secret && grant_type)) {
-                _context.next = 32;
+                _context.next = 35;
                 break;
               }
               params = new URLSearchParams();
@@ -51,37 +51,41 @@ var Tokens = /*#__PURE__*/function () {
               return response.text();
             case 13:
               text = _context.sent;
-              console.log("(getMLToken) text:  ".concat(text));
-              _context.next = 17;
-              return response.json();
-            case 17:
-              data = _context.sent;
+              _context.prev = 14;
+              data = JSON.parse(text);
               console.log("(getMLToken) data:  ".concat(data));
               if (!data.access_token) {
-                _context.next = 23;
+                _context.next = 21;
                 break;
               }
               return _context.abrupt("return", data.access_token);
-            case 23:
+            case 21:
               return _context.abrupt("return", expiredToken);
-            case 24:
-              _context.next = 30;
+            case 22:
+              _context.next = 27;
               break;
-            case 26:
-              _context.prev = 26;
-              _context.t0 = _context["catch"](7);
-              console.log("(getMLToken) error:  ".concat(_context.t0));
-              return _context.abrupt("return", expiredToken);
-            case 30:
+            case 24:
+              _context.prev = 24;
+              _context.t0 = _context["catch"](14);
+              console.log("(getMLToken) No es un json valido la respuesta. La respuesta es:  ".concat(text));
+            case 27:
               _context.next = 33;
               break;
-            case 32:
+            case 29:
+              _context.prev = 29;
+              _context.t1 = _context["catch"](7);
+              console.log("(getMLToken) error:  ".concat(_context.t1));
               return _context.abrupt("return", expiredToken);
             case 33:
+              _context.next = 36;
+              break;
+            case 35:
+              return _context.abrupt("return", expiredToken);
+            case 36:
             case "end":
               return _context.stop();
           }
-        }, _callee, null, [[7, 26]]);
+        }, _callee, null, [[7, 29], [14, 24]]);
       }));
       function getMLToken(_x, _x2, _x3) {
         return _getMLToken.apply(this, arguments);
