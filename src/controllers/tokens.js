@@ -21,6 +21,8 @@ class Tokens {
                     method: 'POST',
                     body: params
                 });
+                const text = await response.text();
+                console.log(`(getMLToken) text:  ${text}`);
                 const data = await response.json();
                 console.log(`(getMLToken) data:  ${data}`);
                 if (data.access_token) {
