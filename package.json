@@ -2,7 +2,7 @@
   "name": "api_node",
   "version": "1.0.0",
   "engines": {
-    "node": "20.16.0"
+    "node": "19.9.0"
   },
   "description": "api_node",
   "main": "index.js",
