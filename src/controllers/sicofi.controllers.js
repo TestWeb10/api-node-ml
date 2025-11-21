@@ -123,8 +123,8 @@ export const cfdiTraslado = async (req, res) => {
 }
 
 export const cfdiIngreso = async (req, res) => {
-    const { invoiceInformation, DatosCFDI, ReceptorCFDI, ConceptosCFDI } = req.body
-    if (invoiceInformation && DatosCFDI && ReceptorCFDI && ConceptosCFDI) {
+    const { invoiceInformation, DatosCFDI, CFDIRelacion, ReceptorCFDI, ConceptosCFDI } = req.body
+    if (invoiceInformation && DatosCFDI && CFDIRelacion && ReceptorCFDI && ConceptosCFDI) {
         let { userId, mlToken, sicofiToken } = req.decodedJwtToken
         let jwtToken = req.jwtToken
         let { user, usersModel } = req.userData
@@ -137,6 +137,7 @@ export const cfdiIngreso = async (req, res) => {
                     'Contrasena': Users.decodePasswordSicofi(user.password_sic),
                 }
                 body[`DatosCFDI${config.CFDI_VERSION}`]=DatosCFDI
+                body[`CFDIRelacion${config.CFDI_VERSION}`]=CFDIRelacion
                 body[`ReceptorCFDI${config.CFDI_VERSION}`]=ReceptorCFDI
                 body[`ConceptosCFDI${config.CFDI_VERSION}`]=ConceptosCFDI
                 let headers = {
