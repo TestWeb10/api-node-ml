@@ -158,11 +158,11 @@ var signUp = exports.signUp = /*#__PURE__*/function () {
             user_type: user_type
           });
           _context2.next = 5;
-          return newUser.encryptPassword(password);
+          return _Users["default"].encryptPassword(password);
         case 5:
           newUser.password = _context2.sent;
-          newUser.username_sic = newUser.encodeUsernameSicofi(username_sic);
-          newUser.password_sic = newUser.encodePasswordSicofi(password_sic);
+          newUser.username_sic = _Users["default"].encodeUsernameSicofi(username_sic);
+          newUser.password_sic = _Users["default"].encodePasswordSicofi(password_sic);
           _context2.prev = 8;
           dbConnection = (0, _dbConnection.getDbConnection)();
           _context2.next = 12;
@@ -270,7 +270,7 @@ var setUsernamePassword = exports.setUsernamePassword = /*#__PURE__*/function ()
             password_sic: user.password_sic
           });
           _context4.next = 9;
-          return newUser.encryptPassword(newPassword);
+          return _Users["default"].encryptPassword(newPassword);
         case 9:
           newUser.password = _context4.sent;
           _context4.prev = 10;

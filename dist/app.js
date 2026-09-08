@@ -14,6 +14,7 @@ var _auth = _interopRequireDefault(require("./routes/auth.routes"));
 var _db = _interopRequireDefault(require("./routes/db.routes"));
 var _ml = _interopRequireDefault(require("./routes/ml.routes"));
 var _sicofi = _interopRequireDefault(require("./routes/sicofi.routes"));
+var _sicofiData = _interopRequireDefault(require("./routes/sicofiData.routes"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 // Este archivo sirve para configurar la aplicacion de express
 
@@ -65,4 +66,5 @@ app.use('/api/auth', _auth["default"]);
 app.use('/api/db', _db["default"]);
 app.use('/api/ml', _ml["default"]);
 app.use('/api/sicofi', _sicofi["default"]);
+app.use('/api/sicofiData', _sicofiData["default"]);
 var _default = exports["default"] = app;
