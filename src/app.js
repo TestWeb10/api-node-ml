@@ -12,6 +12,7 @@ import authRouter from "./routes/auth.routes"
 import dbRouter from "./routes/db.routes"
 import mlRouter from "./routes/ml.routes"
 import sicofiRouter from "./routes/sicofi.routes"
+import sicofiDataRouter from "./routes/sicofiData.routes"
 
 // Iniciamos express
 const app=express()
@@ -55,5 +56,6 @@ app.use('/api/auth', authRouter)
 app.use('/api/db', dbRouter)
 app.use('/api/ml', mlRouter)
 app.use('/api/sicofi', sicofiRouter)
+app.use('/api/sicofiData', sicofiDataRouter) 
 
 export default app

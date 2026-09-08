@@ -78,9 +78,9 @@ export const signUp = async (req, res) => {
             user_type
         })
 
-        newUser.password = await newUser.encryptPassword(password)
-        newUser.username_sic = newUser.encodeUsernameSicofi(username_sic)
-        newUser.password_sic = newUser.encodePasswordSicofi(password_sic)
+        newUser.password = await Users.encryptPassword(password)
+        newUser.username_sic = Users.encodeUsernameSicofi(username_sic)
+        newUser.password_sic = Users.encodePasswordSicofi(password_sic)
 
         try {
             const dbConnection = getDbConnection()
@@ -134,7 +134,7 @@ export const setUsernamePassword = async (req, res) => {
                 username_sic: user.username_sic,
                 password_sic: user.password_sic
             })
-            newUser.password = await newUser.encryptPassword(newPassword)
+            newUser.password = await Users.encryptPassword(newPassword)
             try {
                 let updatedUser = await usersModel.findOneAndUpdate({ "_id": userId }, { "username": newUsername, "password": newUser.password }, { new: true }).select({ "_id": 1 })
                 if (updatedUser) {

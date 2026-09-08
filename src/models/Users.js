@@ -17,7 +17,7 @@ const usersSchema=new Schema({
     user_type: { type : String , "default" : "demo" }
 })
 
-usersSchema.methods.encryptPassword=async password => {
+usersSchema.statics.encryptPassword=async password => {
     const salts=await bcrypt.genSalt(10)
     const hashPassword=await bcrypt.hash(password, salts)
     return hashPassword
@@ -28,12 +28,12 @@ usersSchema.methods.matchPassword=async function(password) {
     return match
 }
 
-usersSchema.methods.encodeUsernameSicofi=username_sic => {
+usersSchema.statics.encodeUsernameSicofi=username_sic => {
     const base64data=Buffer.from(username_sic).toString('base64')
     return base64data
 }
 
-usersSchema.methods.encodePasswordSicofi=password_sic => {
+usersSchema.statics.encodePasswordSicofi=password_sic => {
     const base64data=Buffer.from(password_sic).toString('base64')
     return base64data
 }
