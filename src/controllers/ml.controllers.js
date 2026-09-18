@@ -172,6 +172,12 @@ export const getShipments = async (req, res) => {
                             shipments.push(obj)
                         }
                     }
+                    // Preprocesamiento de 'shipments'
+                    shipments = shipments.filter(routeShipments => {
+                        // Si tiene la propiedad 'error' significa que hay un error
+                        // Objeto de ejemplo: {entity_id: '154275326', status: 425, error: ''}
+                        return !Object.hasOwn(routeShipments, 'error'); 
+                    });
 
                     // res.cookie('session', jwtToken)
                     // res.setHeader('Cache-Control', 'private')

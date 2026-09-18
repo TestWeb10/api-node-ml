@@ -44,11 +44,11 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
         case 0:
           routes = req.body.routes;
           if (!routes) {
-            _context3.next = 65;
+            _context3.next = 66;
             break;
           }
           if (!(routes.length > 0)) {
-            _context3.next = 62;
+            _context3.next = 63;
             break;
           }
           _req$decodedJwtToken = req.decodedJwtToken, userId = _req$decodedJwtToken.userId, mlToken = _req$decodedJwtToken.mlToken, sicofiToken = _req$decodedJwtToken.sicofiToken;
@@ -57,7 +57,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           it = 0;
         case 7:
           if (!(it < 2)) {
-            _context3.next = 60;
+            _context3.next = 61;
             break;
           }
           _context3.prev = 8;
@@ -111,7 +111,7 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             _context3.next = 33;
             break;
           }
-          return _context3.abrupt("continue", 57);
+          return _context3.abrupt("continue", 58);
         case 33:
           promisesRoutes = responsesRoutes.map(function (elem) {
             return elem.json();
@@ -272,8 +272,17 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
           _context3.next = 39;
           break;
         case 44:
+          // Preprocesamiento de 'shipments'
+          shipments = shipments.filter(function (routeShipments) {
+            // Si tiene la propiedad 'error' significa que hay un error
+            // Objeto de ejemplo: {entity_id: '154275326', status: 425, error: ''}
+            return !Object.hasOwn(routeShipments, 'error');
+          });
+
+          // res.cookie('session', jwtToken)
+          // res.setHeader('Cache-Control', 'private')
           if (!(unauthorizedRoutes.length != 0)) {
-            _context3.next = 46;
+            _context3.next = 47;
             break;
           }
           return _context3.abrupt("return", res.status(401).json({
@@ -281,9 +290,9 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             message: "Rutas que no se pudieron obtener debido a que no se tenia autorizacion: " + unauthorizedRoutes.join(", "),
             jwtToken: jwtToken
           }));
-        case 46:
+        case 47:
           if (!(invalidRoutes.length != 0)) {
-            _context3.next = 50;
+            _context3.next = 51;
             break;
           }
           return _context3.abrupt("return", res.status(404).json({
@@ -291,18 +300,18 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             message: "Rutas no existentes: " + invalidRoutes.join(", "),
             jwtToken: jwtToken
           }));
-        case 50:
+        case 51:
           return _context3.abrupt("return", res.status(200).json({
             error: "",
             message: "La peticion fue satisfactoria.",
             jwtToken: jwtToken,
             shipments: shipments
           }));
-        case 51:
-          _context3.next = 57;
+        case 52:
+          _context3.next = 58;
           break;
-        case 53:
-          _context3.prev = 53;
+        case 54:
+          _context3.prev = 54;
           _context3.t1 = _context3["catch"](8);
           // Para mostrar informacion del error 
           console.log("(getShipments) error:  ".concat(_context3.t1));
@@ -311,31 +320,31 @@ var getShipments = exports.getShipments = /*#__PURE__*/function () {
             message: "Ha ocurrido un problema al realizar la peticion.",
             jwtToken: jwtToken
           }));
-        case 57:
+        case 58:
           it++;
           _context3.next = 7;
           break;
-        case 60:
-          _context3.next = 63;
+        case 61:
+          _context3.next = 64;
           break;
-        case 62:
+        case 63:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "La lista de rutas esta vacia."
           }));
-        case 63:
-          _context3.next = 66;
+        case 64:
+          _context3.next = 67;
           break;
-        case 65:
+        case 66:
           return _context3.abrupt("return", res.status(400).json({
             error: "",
             message: "No se recibieron los datos completos."
           }));
-        case 66:
+        case 67:
         case "end":
           return _context3.stop();
       }
-    }, _callee, null, [[8, 53]]);
+    }, _callee, null, [[8, 54]]);
   }));
   return function getShipments(_x, _x2) {
     return _ref.apply(this, arguments);
